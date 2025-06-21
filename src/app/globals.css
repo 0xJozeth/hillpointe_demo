@@ -1,5 +1,34 @@
 @import "tailwindcss";
 
+/* Font Definitions for Helvetica Now Text */
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-bold-demo.ttf') format('truetype');
+  font-weight: bold; /* 700 */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-bolditalic-demo.ttf') format('truetype');
+  font-weight: bold; /* 700 */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-black-demo.ttf') format('truetype');
+  font-weight: 900; /* Black */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-blackitalic-demo.ttf') format('truetype');
+  font-weight: 900; /* Black */
+  font-style: italic;
+}
+
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,8 +48,210 @@
   }
 } */
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Now Text', Arial, Helvetica, sans-serif;
+}
+
+.section {
+  min-height: 100vh; /* Ensures full viewport height */
+  display: flex; /* Optional: useful for centering content */
+  align-items: center; /* Optional: vertical centering */
+  justify-content: space-between; /* Position image and text */
+  font-size: 1.5rem; /* Optional: placeholder text visibility */
+  padding: 0px 0px 0px 0px; /* Optional: some padding within sections */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens if necessary */
+}
+
+.section-one {
+  background: linear-gradient(45deg, #5c707a 20%, #abc1c9 100%); /* Darker bottom-left (#5c707a) to lighter top-right (#abc1c9), dark part larger */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  overflow: hidden; /* Enabled for parallax containment */
+  position: relative; /* Added for absolute positioning of child elements */
+  padding-left: 1.5%; /* Add padding to the left of section-one */
+  padding-right: 0; /* Remove padding from the right of section-one */
+}
+
+.section-two {
+  background-color: #ffffff;
+}
+
+.section-three {
+  background-color: #cfedda;
+}
+
+.section-image {
+  width: 70%; /* Updated as per request */
+  /* flex-basis: 40%; */ /* Alternative for flex control */
+  object-fit: cover; /* Ensures image covers the area well */
+  max-height: 80vh; /* Prevents excessively tall images */
+  /* Add border or margin if needed for visual separation */
+  /* border: 1px solid #ddd; */
+  /* margin: 10px; */
+}
+
+.section-text-content {
+  width: 25%; /* Adjusted for 70% image width, leaving 5% gap */
+  /* flex-basis: 55%; */ /* Alternative for flex control */
+  /* Add padding or alignment if needed */
+  /* padding: 0 20px; */
+}
+
+/* Responsive adjustments: On smaller screens, stack them */
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+    align-items: center; /* Center items when stacked */
+    justify-content: center;
+  }
+
+  .section-image,
+  .section-text-content {
+    width: 90%; /* Take more width when stacked */
+    /* flex-basis: 90%; */
+    margin-bottom: 20px; /* Add space between stacked items */
+  }
+
+  .section-image {
+    order: 1; /* Ensure image is first by default when stacked */
+  }
+  .section-text-content {
+    order: 2;
+  }
+
+  /* Specific order for section-two on mobile if text should be first */
+  .section-two .section-image {
+    order: 2;
+  }
+  .section-two .section-text-content {
+    order: 1;
+  }
+}
+
+/* Hero Section Styles */
+.hero-left-column {
+  flex-basis: 45%; /* Added to restore two-column layout */
+  padding-right: 0px;
+  color: white; /* Default text color for this column */
+  min-width: 0; /* Allow column to shrink if content is too wide */
+}
+
+.hero-left-column h1 {
+  font-family: 'Helvetica Now Text', sans-serif;
+  font-weight: 100;
+  font-size: clamp(2.5rem, 10vw, 12rem);
+  line-height: .75 ;
+  margin-bottom: 20px;
+}
+
+.hero-left-column p {
+  font-family: 'Helvetica Now Text', sans-serif;
+  font-weight: normal; 
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin-bottom: 30px;
+}
+
+.hero-left-column button {
+  background-color: #a459fe;
+  color: white;
+  font-family: 'Helvetica Now Text', sans-serif;
+  font-weight: bold; /* Using Bold for button text */
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Increased font size */
+  padding: 10px 100px; /* Increased padding for larger button */
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute; /* Position sticky to bottom left of section-one */
+  bottom: 0%;     /* Aligns with section-one bottom padding */
+  left: 0%;         /* Aligns with section-one left padding */
+  z-index: 10;      /* Ensure button is above other content if necessary */
+}
+
+.hero-left-column button .arrow-icon {
+  font-size: 1.2em; /* Make arrow slightly larger */
+}
+
+.hero-right-column {
+  flex-basis: 55%; /* Increased flex-basis to allow it to take more space */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0; /* Allow column to shrink if content is too wide */
+  position: relative; /* Needed for absolute positioning of children */
+  /* overflow: visible; */ /* Ensure content can overflow */
+  margin-right: -5%; /* Negative margin to pull it to the right, effectively overflowing */
+}
+
+.hero-right-container {
+
+}
+
+.hero-image-stack {
+  position: relative;
+  width: 100%; /* Or a specific width */
+  height: 100%; /* Or a specific height */
+}
+
+.hero-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cover the area */
+  z-index: 1; /* Behind foreground image */
+  will-change: transform; /* Performance hint for parallax */
+}
+
+.hero-foreground-image {
+  position: relative; /* Or absolute if specific positioning is needed */
+  z-index: 2; /* In front of background image */
+  will-change: transform; /* Performance hint for parallax */
+  border-radius: 65px; /* needed to round off the edges of the blur */
+  margin: 150px;
+}
+
+/* Responsive Design for Hero Section */
+@media (max-width: 768px) {
+  .section-one {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 5%;
+  }
+
+  .hero-left-column,
+  .hero-right-column {
+    flex-basis: 100%;
+    padding-right: 0;
+    margin-bottom: 30px;
+  }
+
+  .hero-right-column {
+    margin-bottom: 0;
+  }
+
+  .hero-left-column h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .hero-left-column p {
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
+  }
+
+  .hero-left-column button {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    padding: 20px 40px;
+    borderRadius: 0px;
+  }
 }

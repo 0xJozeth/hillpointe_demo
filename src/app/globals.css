@@ -1,26 +1,234 @@
 @import "tailwindcss";
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-bold-demo.ttf') format('truetype');
+  font-weight: bold; 
+  font-style: normal;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-bolditalic-demo.ttf') format('truetype');
+  font-weight: bold; 
+  font-style: italic;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-black-demo.ttf') format('truetype');
+  font-weight: 900; 
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Helvetica Now Text';
+  src: url('/fonts/helvetica-now/helveticanowtext-blackitalic-demo.ttf') format('truetype');
+  font-weight: 900; 
+  font-style: italic;
+}
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Helvetica Now Text', Arial, Helvetica, sans-serif;
+}
+
+.section {
+  min-height: 100vh; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  font-size: 1.5rem; 
+  padding: 0px 0px 0px 0px; 
+  flex-wrap: wrap; 
+}
+
+.section-one {
+  background: linear-gradient(45deg, #5c707a 20%, #abc1c9 100%); 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  overflow: hidden; 
+  position: relative; 
+  padding-left: 1.5%; 
+  padding-right: 0; 
+}
+
+.section-two {
+  background-color: #ffffff;
+}
+
+.section-three {
+  background-color: #cfedda;
+}
+
+.section-image {
+  width: 70%;
+  object-fit: cover; 
+  max-height: 80vh; 
+  
+}
+
+.section-text-content {
+  width: 25%; 
+}
+
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-image,
+  .section-text-content {
+    width: 90%; 
+    margin-bottom: 20px;
+  }
+
+  .section-image {
+    order: 1; 
+  }
+  .section-text-content {
+    order: 2;
+  }
+
+ 
+  .section-two .section-image {
+    order: 2;
+  }
+  .section-two .section-text-content {
+    order: 1;
+  }
+}
+
+
+.hero-left-column {
+  flex-basis: 45%; /* two-column layout */
+  padding-right: 0px;
+  color: white; 
+  min-width: 0; /* allow column to shrink */
+}
+
+.hero-left-column h1 {
+  font-family: 'Helvetica Now Text', sans-serif;
+  font-weight: 100;
+  font-size: clamp(2.5rem, 10vw, 12rem);
+  line-height: .75 ;
+  margin-bottom: 20px;
+}
+
+.hero-left-column h1 span {
+  display: inline-block;
+}
+
+.hero-left-column p {
+  font-family: 'Helvetica Now Text', sans-serif;
+  font-weight: normal; 
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin-bottom: 30px;
+}
+
+.hero-left-column button {
+  background-color: #a459fe;
+  color: white;
+  font-family: 'Helvetica Now Text', sans-serif;
+  font-weight: bold; 
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  padding: 10px 100px; 
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute; 
+  bottom: 0%;     
+  left: 0%;         
+  z-index: 10;      
+}
+
+.hero-left-column button .arrow-icon {
+  font-size: 1.2em; 
+}
+
+.hero-right-column {
+  flex-basis: 55%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 0; 
+  position: relative; 
+  overflow: visible; 
+  margin-right: -5%; /* Negative margin to pull it to the right, effectively overflowing */
+}
+
+.hero-right-container {
+
+}
+
+.hero-image-stack {
+  position: relative;
+  width: 100%; 
+  height: 100%; 
+}
+
+.hero-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  z-index: 1; 
+  will-change: transform; 
+}
+
+.hero-foreground-image {
+  position: relative;
+  z-index: 2; 
+  will-change: transform; 
+  border-radius: 65px; /* needed to round off the edges of the blur */
+  margin: 150px;
+}
+
+/* Responsive Design for Hero Section */
+@media (max-width: 768px) {
+  .section-one {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 5%;
+  }
+
+  .hero-left-column,
+  .hero-right-column {
+    flex-basis: 100%;
+    padding-right: 0;
+    margin-bottom: 30px;
+  }
+
+  .hero-right-column {
+    margin-bottom: 0;
+  }
+
+  .hero-left-column h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .hero-left-column p {
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
+  }
+
+  .hero-left-column button {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    padding: 20px 40px;
+    borderRadius: 0px;
+  }
 }

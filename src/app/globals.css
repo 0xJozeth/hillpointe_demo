@@ -1,52 +1,33 @@
 @import "tailwindcss";
 
-/* Font Definitions for Helvetica Now Text */
+
 @font-face {
   font-family: 'Helvetica Now Text';
   src: url('/fonts/helvetica-now/helveticanowtext-bold-demo.ttf') format('truetype');
-  font-weight: bold; /* 700 */
+  font-weight: bold; 
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Helvetica Now Text';
   src: url('/fonts/helvetica-now/helveticanowtext-bolditalic-demo.ttf') format('truetype');
-  font-weight: bold; /* 700 */
+  font-weight: bold; 
   font-style: italic;
 }
 
 @font-face {
   font-family: 'Helvetica Now Text';
   src: url('/fonts/helvetica-now/helveticanowtext-black-demo.ttf') format('truetype');
-  font-weight: 900; /* Black */
+  font-weight: 900; 
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Helvetica Now Text';
   src: url('/fonts/helvetica-now/helveticanowtext-blackitalic-demo.ttf') format('truetype');
-  font-weight: 900; /* Black */
+  font-weight: 900; 
   font-style: italic;
 }
-
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
 
 html {
   scroll-behavior: smooth;
@@ -59,25 +40,25 @@ body {
 }
 
 .section {
-  min-height: 100vh; /* Ensures full viewport height */
-  display: flex; /* Optional: useful for centering content */
-  align-items: center; /* Optional: vertical centering */
-  justify-content: space-between; /* Position image and text */
-  font-size: 1.5rem; /* Optional: placeholder text visibility */
-  padding: 0px 0px 0px 0px; /* Optional: some padding within sections */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens if necessary */
+  min-height: 100vh; 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  font-size: 1.5rem; 
+  padding: 0px 0px 0px 0px; 
+  flex-wrap: wrap; 
 }
 
 .section-one {
-  background: linear-gradient(45deg, #5c707a 20%, #abc1c9 100%); /* Darker bottom-left (#5c707a) to lighter top-right (#abc1c9), dark part larger */
+  background: linear-gradient(45deg, #5c707a 20%, #abc1c9 100%); 
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 100vh;
-  overflow: hidden; /* Enabled for parallax containment */
-  position: relative; /* Added for absolute positioning of child elements */
-  padding-left: 1.5%; /* Add padding to the left of section-one */
-  padding-right: 0; /* Remove padding from the right of section-one */
+  overflow: hidden; 
+  position: relative; 
+  padding-left: 1.5%; 
+  padding-right: 0; 
 }
 
 .section-two {
@@ -89,45 +70,37 @@ body {
 }
 
 .section-image {
-  width: 70%; /* Updated as per request */
-  /* flex-basis: 40%; */ /* Alternative for flex control */
-  object-fit: cover; /* Ensures image covers the area well */
-  max-height: 80vh; /* Prevents excessively tall images */
-  /* Add border or margin if needed for visual separation */
-  /* border: 1px solid #ddd; */
-  /* margin: 10px; */
+  width: 70%;
+  object-fit: cover; 
+  max-height: 80vh; 
+  
 }
 
 .section-text-content {
-  width: 25%; /* Adjusted for 70% image width, leaving 5% gap */
-  /* flex-basis: 55%; */ /* Alternative for flex control */
-  /* Add padding or alignment if needed */
-  /* padding: 0 20px; */
+  width: 25%; 
 }
 
-/* Responsive adjustments: On smaller screens, stack them */
 @media (max-width: 768px) {
   .section {
     flex-direction: column;
-    align-items: center; /* Center items when stacked */
+    align-items: center;
     justify-content: center;
   }
 
   .section-image,
   .section-text-content {
-    width: 90%; /* Take more width when stacked */
-    /* flex-basis: 90%; */
-    margin-bottom: 20px; /* Add space between stacked items */
+    width: 90%; 
+    margin-bottom: 20px;
   }
 
   .section-image {
-    order: 1; /* Ensure image is first by default when stacked */
+    order: 1; 
   }
   .section-text-content {
     order: 2;
   }
 
-  /* Specific order for section-two on mobile if text should be first */
+ 
   .section-two .section-image {
     order: 2;
   }
@@ -136,12 +109,12 @@ body {
   }
 }
 
-/* Hero Section Styles */
+
 .hero-left-column {
-  flex-basis: 45%; /* Added to restore two-column layout */
+  flex-basis: 45%; /* two-column layout */
   padding-right: 0px;
-  color: white; /* Default text color for this column */
-  min-width: 0; /* Allow column to shrink if content is too wide */
+  color: white; 
+  min-width: 0; /* allow column to shrink */
 }
 
 .hero-left-column h1 {
@@ -150,6 +123,10 @@ body {
   font-size: clamp(2.5rem, 10vw, 12rem);
   line-height: .75 ;
   margin-bottom: 20px;
+}
+
+.hero-left-column h1 span {
+  display: inline-block;
 }
 
 .hero-left-column p {
@@ -163,33 +140,33 @@ body {
   background-color: #a459fe;
   color: white;
   font-family: 'Helvetica Now Text', sans-serif;
-  font-weight: bold; /* Using Bold for button text */
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem); /* Increased font size */
-  padding: 10px 100px; /* Increased padding for larger button */
+  font-weight: bold; 
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  padding: 10px 100px; 
   border: none;
   border-radius: 0px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  position: absolute; /* Position sticky to bottom left of section-one */
-  bottom: 0%;     /* Aligns with section-one bottom padding */
-  left: 0%;         /* Aligns with section-one left padding */
-  z-index: 10;      /* Ensure button is above other content if necessary */
+  position: absolute; 
+  bottom: 0%;     
+  left: 0%;         
+  z-index: 10;      
 }
 
 .hero-left-column button .arrow-icon {
-  font-size: 1.2em; /* Make arrow slightly larger */
+  font-size: 1.2em; 
 }
 
 .hero-right-column {
-  flex-basis: 55%; /* Increased flex-basis to allow it to take more space */
+  flex-basis: 55%; 
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 0; /* Allow column to shrink if content is too wide */
-  position: relative; /* Needed for absolute positioning of children */
-  /* overflow: visible; */ /* Ensure content can overflow */
+  min-width: 0; 
+  position: relative; 
+  overflow: visible; 
   margin-right: -5%; /* Negative margin to pull it to the right, effectively overflowing */
 }
 
@@ -199,8 +176,8 @@ body {
 
 .hero-image-stack {
   position: relative;
-  width: 100%; /* Or a specific width */
-  height: 100%; /* Or a specific height */
+  width: 100%; 
+  height: 100%; 
 }
 
 .hero-background-image {
@@ -209,15 +186,15 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Cover the area */
-  z-index: 1; /* Behind foreground image */
-  will-change: transform; /* Performance hint for parallax */
+  object-fit: cover; 
+  z-index: 1; 
+  will-change: transform; 
 }
 
 .hero-foreground-image {
-  position: relative; /* Or absolute if specific positioning is needed */
-  z-index: 2; /* In front of background image */
-  will-change: transform; /* Performance hint for parallax */
+  position: relative;
+  z-index: 2; 
+  will-change: transform; 
   border-radius: 65px; /* needed to round off the edges of the blur */
   margin: 150px;
 }

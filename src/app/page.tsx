@@ -1,59 +1,102 @@
 "use client"
 import Image from 'next/image';
-import useParallax from '@/hooks/useParallax'; // Adjusted path
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import useParallax from '@/hooks/useParallax'; 
 
-// Helper function to create a Suspense resource
-function createResource<T>(asyncFn: () => Promise<T>): { read: () => T } {
-  let status = 'pending';
-  let result: T;
-  let error: Error;
-  const suspender = asyncFn().then(
-    (r: T) => {
-      status = 'success';
-      result = r;
-    },
-    (e: unknown) => {
-      status = 'error';
-      error = e as Error; // Cast to Error for consistency if needed, or handle unknown
-    }
-  );
-
-  return {
-    read(): T {
-      if (status === 'pending') {
-        throw suspender;
-      } else if (status === 'error') {
-        throw error;
-      } else if (status === 'success') {
-        return result;
-      }
-      throw new Error('Resource in an invalid state');
-    },
-  };
-}
-
-const delayedMessageResource = createResource<string>(
-  () => new Promise(resolve => setTimeout(() => resolve("Page data loaded after delay!"), 5000))
-);
+const progressBarVariants = {
+  initial: { width: '0%' },
+  animate: {
+    width: '100%',
+    transition: { duration: 3 },
+  },
+};
 
 export default function Home() {
-  const message = delayedMessageResource.read(); // This will suspend the component
-  console.log('Delayed message:', message); // Use the message to satisfy ESLint
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000); // Show loading for 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const backgroundTransform = useParallax(0.3);
   const foregroundTransform = useParallax(0.1);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 1,
+      },
+    },
+  };
+
+  if (loading) {
+    return (
+      <motion.div
+        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="text-center">
+          <h1 className="text-5xl font-bold" style={{ fontFamily: "'Helvetica Now Text', sans-serif" }}>
+            Hillpointe
+          </h1>
+          <motion.div
+            className="mt-4 h-px w-full max-w-xs mx-auto"
+            style={{ background: 'linear-gradient(to right, #3b82f6, #1e40af)' }}
+            variants={progressBarVariants}
+            initial="initial"
+            animate="animate"
+          />
+        </div>
+      </motion.div>
+    );
+  }
+
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="section section-one">
         <div className="hero-left-column">
-          <h1>BUILDING<br/>LASTING<br/>VALVE</h1>
+          <motion.h1
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.span variants={itemVariants}>BUILD</motion.span>
+            <br />
+            <motion.span variants={itemVariants}>LASTING</motion.span>
+            <br />
+            <motion.span variants={itemVariants}>VALUE</motion.span>
+          </motion.h1>
           <p>Unlocking Smart Capital For Data-Driven Investors</p>
           <button>Apply Now <span className="arrow-icon">↗</span></button>
         </div>
         <div className="relative hero-right-column hero-right-container hero-image-stack">
           <Image
-            src="/building_1.png" 
+            src="/building_1.png"
             alt="Building Background"
             layout="fill"
             objectFit="cover"
@@ -65,10 +108,10 @@ export default function Home() {
             alt="iPhone Outline"
             width={400}
             height={200}
-            className="hero-foreground-image backdrop-blur-sm" 
+            className="hero-foreground-image backdrop-blur-sm"
             style={{ transform: foregroundTransform }}
           />
-          <div className='absolute bg-slate-400 rounded-lg w-[380px] h-[280px] top-[320px] z-40 opacity-30'/>
+          <div className='absolute bg-slate-400 rounded-lg w-[380px] h-[280px] top-[320px] z-40 opacity-30' />
         </div>
       </div>
       <div className="section section-two">
@@ -95,6 +138,6 @@ export default function Home() {
           <p>Section 3</p>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }

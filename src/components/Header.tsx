@@ -4,11 +4,31 @@ import Link from 'next/link';
 import { ArrowRight, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { trpc } from '@/lib/trpc/client';
 
 const Header = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { mutate: submitApplication } = trpc.submitApplication.useMutation({
+    onSuccess: (data) => {
+      console.log('Application submitted successfully:', data);
+      alert('Application submitted successfully!');
+    },
+    onError: (error) => {
+      console.error('Failed to submit application:', error);
+      alert('Failed to submit application. Please try again.');
+    },
+  });
+
+  const handleApplyNow = () => {
+    submitApplication({
+      applicantName: 'John Doe',
+      email: 'john.doe@example.com',
+      loanType: 'Single Family',
+    });
+  };
 
   const controlNavbar = () => {
     if (typeof window !== 'undefined') {
@@ -57,10 +77,10 @@ const Header = () => {
               <span>Contact Us</span>
               <ArrowRight size={16} />
             </Link>
-            <Link href="#" className="bg-white text-gray-800 px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-gray-200 text-sm">
+            <button onClick={handleApplyNow} className="bg-white text-gray-800 px-4 py-2 rounded-full flex items-center space-x-2 hover:bg-gray-200 text-sm">
               <span>Apply Now</span>
               <ArrowRight size={16} />
-            </Link>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}

@@ -4,7 +4,6 @@ const useParallax = (speedFactor: number): string => {
   const [transform, setTransform] = useState('translateY(0px)');
 
   useEffect(() => {
-    // Ensure this code runs only in the client-side environment
     if (typeof window === 'undefined') {
       return;
     }
@@ -15,7 +14,7 @@ const useParallax = (speedFactor: number): string => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call to set position based on current scroll
+    handleScroll(); 
 
     return () => {
       window.removeEventListener('scroll', handleScroll);

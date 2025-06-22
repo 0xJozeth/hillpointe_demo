@@ -1,17 +1,10 @@
 "use client"
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import useParallax from '@/hooks/useParallax';
 import { trpc } from '@/lib/trpc/client';
-
-const progressBarVariants = {
-  initial: { width: '0%' },
-  animate: {
-    width: '100%',
-    transition: { duration: 3 },
-  },
-};
+import LoanProducts from '@/components/LoanProducts';
+import Hero from '@/components/Hero';
+import Loader from '@/components/Loader';
 
 export default function Home() {
   const { data: products, error, isLoading } = trpc.getLoanProducts.useQuery();
@@ -25,53 +18,9 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
-  const backgroundTransform = useParallax(0.3);
-  const foregroundTransform = useParallax(0.1);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 1,
-      },
-    },
-  };
 
   if (showLoading || isLoading) {
-    return (
-      <motion.div
-        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white"
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="text-center">
-          <h1 className="text-5xl font-bold" style={{ fontFamily: "'Helvetica Now Text', sans-serif" }}>
-            Hillpointe
-          </h1>
-          <motion.div
-            className="mt-4 h-px w-full max-w-xs mx-auto"
-            style={{ background: 'linear-gradient(to right, #3b82f6, #1e40af)' }}
-            variants={progressBarVariants}
-            initial="initial"
-            animate="animate"
-          />
-        </div>
-      </motion.div>
-    );
+    return <Loader />;
   }
 
   if (error) {
@@ -88,62 +37,8 @@ export default function Home() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="section section-one">
-        <div className="hero-left-column">
-          <motion.h1
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.span variants={itemVariants}>BUILD</motion.span>
-            <br />
-            <motion.span variants={itemVariants}>LASTING</motion.span>
-            <br />
-            <motion.span variants={itemVariants}>VALUE</motion.span>
-          </motion.h1>
-          <p>Unlocking Smart Capital For <br /><span className='tagline-hero'>Data-Driven Investors</span></p>
-          <button>Apply Now <span className="arrow-icon">↗</span></button>
-        </div>
-        <div className="relative hero-right-column hero-image-stack">
-          <Image
-            src="/building_1.png"
-            alt="Building Background"
-            layout="fill"
-            objectFit="contain"
-            className="hero-background-image"
-            style={{ transform: backgroundTransform }}
-          />
-          <div className='shrink-0 flex items-center justify-center mx-auto z-10'>
-            <Image
-              src="/iphone_outline_white.svg"
-              alt="iPhone Outline"
-              width={400}
-              height={200}
-              objectFit='contain'
-              className="responsive-iphone relative hero-foreground-image mx-auto backdrop-blur-sm z-10"
-              style={{ transform: foregroundTransform }}
-            />
-            <div className='hero-image-overlay responsive-iphone-screen absolute bg-slate-400 top-[320px] z-40 opacity-30' />
-          </div>
-        </div>
-      </div>
-      <div className="section section-two">
-        <h2 className="text-3xl font-bold text-center mb-8">Our Loan Products</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {products?.map((product) => (
-            <div key={product.id} className="border p-4 rounded-lg">
-              <h3 className="text-xl font-bold">{product.title}</h3>
-              <p>{product.propertyType}</p>
-              <p>
-                ${product.loanAmount.min} - ${product.loanAmount.max}
-              </p>
-              <p>Max LTV: {product.maxLtv * 100}%</p>
-              <p>{product.termLength}</p>
-              <p>{product.additionalInfo}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+      <Hero />
+      {products && <LoanProducts products={products} />}
     </motion.div>
   );
 }

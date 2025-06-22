@@ -50,15 +50,15 @@ body {
 }
 
 .section-one {
-  background: linear-gradient(45deg, #5c707a 20%, #abc1c9 100%); 
+  background: linear-gradient(45deg, #5c707a 20%, #abc1c9 100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 100vh;
-  overflow: hidden; 
-  position: relative; 
-  padding-left: 1.5%; 
-  padding-right: 0; 
+  overflow: hidden;
+  position: relative;
+  padding-left: 1.5%;
+  padding-right: 0;
 }
 
 .section-two {
@@ -111,10 +111,11 @@ body {
 
 
 .hero-left-column {
-  flex-basis: 45%; /* two-column layout */
-  padding-right: 0px;
-  color: white; 
-  min-width: 0; /* allow column to shrink */
+  flex: 1;
+  padding-right: 0rem; 
+  color: white;
+  min-width: 320px; 
+  z-index: 10;
 }
 
 .hero-left-column h1 {
@@ -131,9 +132,14 @@ body {
 
 .hero-left-column p {
   font-family: 'Helvetica Now Text', sans-serif;
-  font-weight: normal; 
+  font-weight: bold;
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   margin-bottom: 30px;
+  line-height: 1.25rem;
+}
+
+.hero-left-column .tagline-hero {
+  font-weight: 800;
 }
 
 .hero-left-column button {
@@ -160,22 +166,20 @@ body {
 }
 
 .hero-right-column {
-  flex-basis: 55%; 
+  flex-basis: 65%;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 0; 
-  position: relative; 
-  overflow: visible; 
+  /* min-width: 750px; */
+  position: relative;
+  overflow: hidden;
   margin-right: -5%; /* Negative margin to pull it to the right, effectively overflowing */
 }
 
-.hero-right-container {
-
-}
 
 .hero-image-stack {
   position: relative;
+  z-index: 1;
   width: 100%; 
   height: 100%; 
 }
@@ -199,12 +203,18 @@ body {
   margin: 150px;
 }
 
+@media (max-width: 768px) {
+  .hero-foreground-image {
+  border-radius: 42px; /* needed to round off the edges of the blur */
+  }
+}
+
 /* Responsive Design for Hero Section */
 @media (max-width: 768px) {
   .section-one {
     flex-direction: column;
     text-align: center;
-    padding: 30px 5%;
+    padding: 120px 5% 30px;
   }
 
   .hero-left-column,
@@ -216,6 +226,15 @@ body {
 
   .hero-right-column {
     margin-bottom: 0;
+    min-width: unset;
+    width: 100%; 
+    margin-right: -15%; 
+  }
+
+  .hero-image-stack {
+    width: 100%;
+    height: auto; 
+    min-height: 400px; 
   }
 
   .hero-left-column h1 {
@@ -229,6 +248,74 @@ body {
   .hero-left-column button {
     font-size: clamp(1rem, 4vw, 1.2rem);
     padding: 20px 40px;
-    borderRadius: 0px;
+  }
+}
+
+.mobile-menu-list {
+  list-style: none;
+  counter-reset: menu-counter;
+}
+
+.mobile-menu-list li {
+  counter-increment: menu-counter;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb; 
+  padding-bottom: 1rem;
+}
+
+.mobile-menu-list li::after {
+  content: '0' counter(menu-counter);
+  color: #9ca3af;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.mobile-menu-list {
+  list-style: none;
+  counter-reset: menu-counter;
+  width: 100%;
+  padding: 20px;
+}
+
+.mobile-menu-list li {
+  counter-increment: menu-counter;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb; 
+  padding-bottom: 1rem;
+}
+
+.mobile-menu-list li::after {
+  content: '0' counter(menu-counter);
+  color: #9ca3af; 
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.responsive-iphone {
+  width: 250px;
+  height: auto;
+}
+
+.responsive-iphone-screen {
+  top: 240px;
+  width: 230px;
+  height: 160px;
+
+}
+
+@media (min-width: 768px) {
+  .responsive-iphone-screen {
+    width: 370px;
+  height: 280px;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-iphone {
+    width: 400px;
   }
 }

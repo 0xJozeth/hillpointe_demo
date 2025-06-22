@@ -5,12 +5,14 @@ import { httpBatchLink } from '@trpc/client';
 import React, { useState } from 'react';
 
 import { trpc } from './client';
+import { errorLink } from './errorLink';
 
 export default function Provider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({}));
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
+        errorLink,
         httpBatchLink({
           url: '/api/trpc',
         }),

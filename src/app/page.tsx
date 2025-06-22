@@ -91,51 +91,30 @@ export default function Home() {
             <br />
             <motion.span variants={itemVariants}>VALUE</motion.span>
           </motion.h1>
-          <p>Unlocking Smart Capital For Data-Driven Investors</p>
+          <p>Unlocking Smart Capital For <br /><span className='tagline-hero'>Data-Driven Investors</span></p>
           <button>Apply Now <span className="arrow-icon">↗</span></button>
         </div>
-        <div className="relative hero-right-column hero-right-container hero-image-stack">
+        <div className="relative hero-right-column hero-image-stack">
           <Image
             src="/building_1.png"
             alt="Building Background"
             layout="fill"
-            objectFit="cover"
+            objectFit="contain"
             className="hero-background-image"
             style={{ transform: backgroundTransform }}
           />
-          <Image
-            src="/iphone_outline_white.svg"
-            alt="iPhone Outline"
-            width={400}
-            height={200}
-            className="hero-foreground-image backdrop-blur-sm"
-            style={{ transform: foregroundTransform }}
-          />
-          <div className='absolute bg-slate-400 rounded-lg w-[380px] h-[280px] top-[320px] z-40 opacity-30' />
-        </div>
-      </div>
-      <div className="section section-two">
-        <div className="section-text-content">
-          <p>Section 2</p>
-        </div>
-        <Image
-          src="/building_2.png"
-          alt="Building 2"
-          className="section-image"
-          width={900}
-          height={700}
-        />
-      </div>
-      <div className="section section-three">
-        <Image
-          src="/building_3.png"
-          alt="Building 3"
-          className="section-image"
-          width={900}
-          height={700}
-        />
-        <div className="section-text-content">
-          <p>Section 3</p>
+          <div className='shrink-0 flex items-center justify-center mx-auto z-10'>
+            <Image
+              src="/iphone_outline_white.svg"
+              alt="iPhone Outline"
+              width={400}
+              height={200}
+              objectFit='contain'
+              className="responsive-iphone relative hero-foreground-image mx-auto backdrop-blur-sm z-10"
+              style={{ transform: foregroundTransform }}
+            />
+            <div className='hero-image-overlay responsive-iphone-screen absolute bg-slate-400 top-[320px] z-40 opacity-30' />
+          </div>
         </div>
       </div>
     </motion.div>

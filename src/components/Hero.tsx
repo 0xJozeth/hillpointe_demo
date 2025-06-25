@@ -1,70 +1,51 @@
 "use client"
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import useParallax from '@/hooks/useParallax';
 
+// import necessary react features: useref for direct dom access, and new custom hook
+import React, { useRef } from 'react';
+import useHeroAnimation from '@/hooks/useHeroAnimation';
+
+/**
+ * hero component displays full-screen section w/ bg vid,
+ * overlay, and central modal vid.
+ * complex animation logic handled by `useheroanimation` custom hook.
+ */
 const Hero = () => {
-  const backgroundTransform = useParallax(0.3);
-  const foregroundTransform = useParallax(0.1);
+  // create refs for all dom elements animation interacts with
+  // refs passed to custom animation hook
+  const heroSectionRef = useRef<HTMLDivElement>(null); // main container for hero section
+  const modalVideoContainerRef = useRef<HTMLDivElement>(null); // container for smaller, centered video
+  const bgVideoRef = useRef<HTMLVideoElement>(null); // full background video element
+  const overlayRef = useRef<HTMLDivElement>(null); // overlay on background video
+  const modalVideoPlayerRef = useRef<HTMLVideoElement>(null); // actual <video> element inside modal container
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        duration: 1,
-      },
-    },
-  };
+  // custom animation hook here, passing necessary refs
+  // hook handles event listeners and style updates
+  useHeroAnimation({
+    heroSectionRef,
+    modalVideoContainerRef,
+    bgVideoRef,
+    overlayRef,
+    modalVideoPlayerRef,
+  });
 
   return (
-    <div className="section section-one">
-      <div className="hero-left-column">
-        <motion.h1
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          <motion.span variants={itemVariants}>BUILD</motion.span>
-          <br />
-          <motion.span variants={itemVariants}>LASTING</motion.span>
-          <br />
-          <motion.span variants={itemVariants}>VALUE</motion.span>
-        </motion.h1>
-        <p>Unlocking Smart Capital For <br /><span className='tagline-hero'>Data-Driven Investors</span></p>
-        <button>Apply Now <span className="arrow-icon">↗</span></button>
-      </div>
-      <div className="relative hero-right-column hero-image-stack">
-        <Image
-          src="/building_1.png"
-          alt="Building Background"
-          layout="fill"
-          objectFit="contain"
-          className="hero-background-image"
-          style={{ transform: backgroundTransform }}
-        />
-        <div className='shrink-0 flex items-center justify-center mx-auto z-10'>
-          <Image
-            src="/iphone_outline_white.svg"
-            alt="iPhone Outline"
-            width={400}
-            height={200}
-            objectFit='contain'
-            className="responsive-iphone relative hero-foreground-image mx-auto backdrop-blur-sm z-10"
-            style={{ transform: foregroundTransform }}
-          />
-          <div className='hero-image-overlay responsive-iphone-screen absolute bg-slate-400 top-[320px] z-40 opacity-30' />
+    <div className="hero-section" ref={heroSectionRef}>
+      {/* video serves as desaturated, low-opacity background */}
+      <video autoPlay loop muted className="hero-video" ref={bgVideoRef}>
+        <source src="/video_2.mp4" type="video/mp4" />
+        your browser does not support the video tag.
+      </video>
+      {/* textured, dark overlay; fades out during animation */}
+      <div className="hero-overlay" ref={overlayRef}></div>
+      {/* div centers modal video content */}
+      <div className="hero-content">
+        {/* container for modal video; element that scales and animates */}
+        <div className="hero-modal-video-container" ref={modalVideoContainerRef}>
+          {/* modal video itself */}
+          <video autoPlay loop muted className="hero-modal-video" ref={modalVideoPlayerRef}>
+            <source src="/video_2.mp4" type="video/mp4" />
+            your browser does not support the video tag.
+          </video>
         </div>
       </div>
     </div>

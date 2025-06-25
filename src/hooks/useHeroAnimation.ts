@@ -8,6 +8,8 @@ interface HeroAnimationRefs {
   bgVideoRef: RefObject<HTMLVideoElement | null>;
   overlayRef: RefObject<HTMLDivElement | null>;
   modalVideoPlayerRef: RefObject<HTMLVideoElement | null>;
+  heroTitleBottomRef: RefObject<HTMLHeadingElement | null>;
+  heroTitleTopRef: RefObject<HTMLHeadingElement | null>;
 }
 
 // total "distance" user needs to "scroll" with mouse wheel for full animation
@@ -30,6 +32,8 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     bgVideoRef,
     overlayRef,
     modalVideoPlayerRef,
+    heroTitleBottomRef,
+    heroTitleTopRef,
   } = refs;
 
   // stores calculated initial height of modal video container (pixels)
@@ -73,6 +77,8 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
       !bgVideoRef.current ||
       !overlayRef.current ||
       !modalVideoPlayerRef.current ||
+      !heroTitleBottomRef.current ||
+      !heroTitleTopRef.current ||
       initialModalHeightPx === 0
     ) {
       return;
@@ -112,7 +118,13 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     // math.max(0, ...) ensures opacity doesn't go below 0
     bgVideoRef.current.style.opacity = Math.max(0, 0.1 * (1 - fastFadeProgress)).toString(); // fades to 0 from initial 0.1
     overlayRef.current.style.opacity = Math.max(0, 1 * (1 - fastFadeProgress)).toString();   // fades to 0 from initial 1
-  }, [heroSectionRef, modalVideoContainerRef, bgVideoRef, overlayRef, modalVideoPlayerRef, initialModalHeightPx]);
+
+    // --- style updates for hero titles (parallax effect) ---
+    const parallaxOffset = prog * 150; // move titles down by 150px at full progress
+    heroTitleBottomRef.current.style.transform = `translate(-50%, -50%) translateY(${parallaxOffset}px)`;
+    heroTitleTopRef.current.style.transform = `translate(-50%, -50%) translateY(${parallaxOffset}px)`;
+
+  }, [heroSectionRef, modalVideoContainerRef, bgVideoRef, overlayRef, modalVideoPlayerRef, initialModalHeightPx, heroTitleBottomRef, heroTitleTopRef]);
 
 
   // effect sets up and tears down 'wheel' event listener for animation

@@ -1,7 +1,6 @@
 "use client"
 
-// import necessary react features: useref for direct dom access, and new custom hook
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import useHeroAnimation from '@/hooks/useHeroAnimation';
 
 /**
@@ -9,7 +8,7 @@ import useHeroAnimation from '@/hooks/useHeroAnimation';
  * overlay, and central modal vid.
  * complex animation logic handled by `useheroanimation` custom hook.
  */
-const Hero = () => {
+const Hero = ({ setHeroAnimationProgress }: { setHeroAnimationProgress: (progress: number) => void }) => {
   // create refs for all dom elements animation interacts with
   // refs passed to custom animation hook
   const heroSectionRef = useRef<HTMLDivElement>(null); // main container for hero section
@@ -22,7 +21,7 @@ const Hero = () => {
 
   // custom animation hook here, passing necessary refs
   // hook handles event listeners and style updates
-  useHeroAnimation({
+  const { animationProgress } = useHeroAnimation({
     heroSectionRef,
     modalVideoContainerRef,
     bgVideoRef,
@@ -31,6 +30,11 @@ const Hero = () => {
     heroTitleBottomRef,
     heroTitleTopRef,
   });
+
+  // Update parent component with animation progress
+  useEffect(() => {
+    setHeroAnimationProgress(animationProgress);
+  }, [animationProgress, setHeroAnimationProgress]);
 
   return (
     <div className="hero-section" ref={heroSectionRef}>

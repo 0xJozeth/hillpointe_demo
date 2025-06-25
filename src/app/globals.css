@@ -33,6 +33,21 @@
   font-weight: 900; 
   font-style: italic;
 }
+@font-face {
+  font-family: 'Gestiva';
+  src: url('/fonts/gestiva/Gestiva.ttf') format('truetype'),
+       url('/fonts/gestiva/Gestiva.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gestiva';
+  src: url('/fonts/gestiva/Gestiva Italic.ttf') format('truetype'),
+       url('/fonts/gestiva/Gestiva Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
 
 html {
   scroll-behavior: smooth;
@@ -162,11 +177,12 @@ body {
 
 .hero-title {
   position: absolute;
-  top: 12.75%;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 8rem;
-  font-weight: 900;
+  font-family: 'Gestiva', serif;
+  font-weight: normal;
+  font-size: 12rem;
   color: white;
   line-height: .7em;
   white-space: nowrap;

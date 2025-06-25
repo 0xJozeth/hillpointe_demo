@@ -43,6 +43,9 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
   // accumulates deltaY from wheel events, drives animation progress
   const [accumulatedWheelDelta, setAccumulatedWheelDelta] = useState(0);
 
+  // Animation progress state (0 to 1)
+  const [animationProgress, setAnimationProgress] = useState(0);
+
   // id of current animation frame request, for cancelling pending frames (performance)
   const animationFrameId = useRef<number | null>(null);
 
@@ -66,9 +69,9 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
   /**
    * core function applying style changes to dom elements
    * based on current animation progress
-   * @param progress number between 0 (animation start) and 1 (animation end)
+   * @param progressValue number between 0 (animation start) and 1 (animation end)
    */
-  const updateVisuals = useCallback((progress: number) => {
+  const updateVisuals = useCallback((progressValue: number) => {
     // exit if required elements aren't available or initial height not calculated
     // check ensures no attempt to access properties of null refs
     if (
@@ -85,7 +88,7 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     }
 
     // ensure progress 'prog' is clamped between 0 (start) and 1 (end)
-    const prog = Math.min(1, Math.max(0, progress));
+    const prog = Math.min(1, Math.max(0, progressValue));
     // 'fastfadeprogress' makes background elements (main background video, overlay)
     // fade out quicker than primary modal expansion
     const fastFadeProgress = Math.min(1, prog * 1.5);
@@ -124,7 +127,10 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     heroTitleBottomRef.current.style.transform = `translate(-50%, -50%) translateY(${parallaxOffset}px)`;
     heroTitleTopRef.current.style.transform = `translate(-50%, -50%) translateY(${parallaxOffset}px)`;
 
-  }, [heroSectionRef, modalVideoContainerRef, bgVideoRef, overlayRef, modalVideoPlayerRef, initialModalHeightPx, heroTitleBottomRef, heroTitleTopRef]);
+    // Update the shared animation progress state
+    setAnimationProgress(prog);
+
+  }, [heroSectionRef, modalVideoContainerRef, bgVideoRef, overlayRef, modalVideoPlayerRef, initialModalHeightPx, heroTitleBottomRef, heroTitleTopRef, setAnimationProgress]);
 
 
   // effect sets up and tears down 'wheel' event listener for animation
@@ -197,6 +203,8 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     }
   // dependencies for effect
   }, [initialModalHeightPx, accumulatedWheelDelta, updateVisuals]); // added updatevisuals
+
+  return { animationProgress };
 };
 
 export default useHeroAnimation;

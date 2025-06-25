@@ -177,14 +177,15 @@ body {
 
 .hero-title {
   position: absolute;
-  top: 20%;
+  top: 37.5%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: 'Gestiva', serif;
-  font-weight: normal;
+  font-weight: bold;
   font-size: 12rem;
   color: white;
-  line-height: .7em;
+  line-height: 1em;
+  kerning: .8;
   white-space: nowrap;
 }
 
@@ -261,5 +262,9 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.filter-white {
+  filter: brightness(0) invert(1);
 }
 

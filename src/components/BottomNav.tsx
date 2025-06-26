@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { NAVIGATION_LINKS, NavLink } from '@/lib/navigation';
 
 interface BottomNavProps {
@@ -39,8 +40,13 @@ const BottomNav: React.FC<BottomNavProps> = ({ isHeroAnimationComplete }) => {
   }
 
   return (
-    <nav className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40">
-      <div className="bg-black text-white px-8 py-4 rounded-full shadow-lg relative">
+    <motion.nav
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40"
+    >
+      <div className="bg-black text-white px-8 py-4 rounded-full shadow-2xl relative">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-90 rounded-full"
           style={{ backgroundImage: "url('/texture-1.jpg')" }}
@@ -58,7 +64,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ isHeroAnimationComplete }) => {
           ))}
         </ul>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 

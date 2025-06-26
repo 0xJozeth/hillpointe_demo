@@ -39,10 +39,9 @@ const Header = () => {
       <header
         className={`fixed z-50 w-full transition-transform duration-300 ease-in-out
                     ${isVisible ? 'translate-y-0' : '-translate-y-full'}
-                    'bg-transparent py-4'}`} // adjusts padding when nav is open
+                    'bg-transparent py-4'}`} 
       >
         <div className="container mx-auto px-0 sm:px-4 flex items-center justify-between h-full"> 
-          {/* Logo - remains on the left */}
           <div className={`transition-opacity duration-300 opacity-100 pt-6`}>
             <Link href="/" className="text-white text-2xl font-bold">
               <Image src='/hillpoint-white-branding.png' alt='logo' height={60} width={200}/>

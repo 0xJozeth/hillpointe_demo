@@ -38,21 +38,16 @@ const Hero = ({ setHeroAnimationProgress }: { setHeroAnimationProgress: (progres
 
   return (
     <div className="hero-section" ref={heroSectionRef}>
-      {/* video serves as desaturated, low-opacity background */}
       <video autoPlay loop muted className="hero-video" ref={bgVideoRef}>
-        <source src="/video_2_comp.mp4" type="video/mp4" />
+        <source src="/video_2_comp.webm" type="video/webm" />
         your browser does not support the video tag.
       </video>
-      {/* textured, dark overlay; fades out during animation */}
       <div className="hero-overlay" ref={overlayRef}></div>
-      {/* div centers modal video content */}
       <div className="hero-content">
         <h1 className="hero-title hero-title-bottom" ref={heroTitleBottomRef}>BUILD <br/> LASTING <br/> VALUE</h1>
-        {/* container for modal video; element that scales and animates */}
         <div className="hero-modal-video-container" ref={modalVideoContainerRef}>
-          {/* modal video itself */}
           <video autoPlay loop muted className="hero-modal-video" ref={modalVideoPlayerRef}>
-            <source src="/video_2_comp.mp4" type="video/mp4" />
+            <source src="/video_2_comp.webm" type="video/webm" />
             your browser does not support the video tag.
           </video>
         </div>

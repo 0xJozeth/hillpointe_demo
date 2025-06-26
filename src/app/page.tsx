@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Hero from '@/components/Hero';
 import BottomNav from '@/components/BottomNav';
 import ValueProposition from '@/components/ValueProposition';
+import InquirySection from '@/components/InquirySection'; 
+import GradientOverlaySection from '@/components/GradientOverlaySection';
 
 export default function Home() {
   const [heroAnimationProgress, setHeroAnimationProgress] = useState(0);
@@ -14,6 +16,8 @@ export default function Home() {
     <div>
       <Hero setHeroAnimationProgress={setHeroAnimationProgress} />
       <ValueProposition />
+      <InquirySection /> 
+      <GradientOverlaySection />
       <BottomNav isHeroAnimationComplete={isHeroAnimationComplete} />
     </div>
   );

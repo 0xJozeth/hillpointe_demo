@@ -1,0 +1,60 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import Link from "next/link";
+
+const Footer = () => {
+  const { ref, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const fadeIn = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  };
+
+  return (
+    <motion.footer
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={fadeIn}
+      className="bg-black text-white py-12 px-4 sm:px-6 lg:px-8"
+    >
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="col-span-1">
+          <h2 className="text-2xl font-bold">Hillpointe</h2>
+        </div>
+        <div className="col-span-1">
+          <h3 className="font-semibold">Navigation</h3>
+          <ul className="mt-4 space-y-2">
+            <li><Link href="/about" className="hover:text-gray-300">About Us</Link></li>
+            <li><Link href="/investments" className="hover:text-gray-300">Investments</Link></li>
+            <li><Link href="/contact" className="hover:text-gray-300">Contact</Link></li>
+          </ul>
+        </div>
+        <div className="col-span-1">
+          <h3 className="font-semibold">Social</h3>
+          <ul className="mt-4 space-y-2">
+            <li><a href="#" className="hover:text-gray-300">LinkedIn</a></li>
+            <li><a href="#" className="hover:text-gray-300">Twitter</a></li>
+          </ul>
+        </div>
+        <div className="col-span-1">
+          <h3 className="font-semibold">Legal</h3>
+          <ul className="mt-4 space-y-2">
+            <li><Link href="/privacy" className="hover:text-gray-300">Privacy Policy</Link></li>
+            <li><Link href="/terms" className="hover:text-gray-300">Terms of Service</Link></li>
+          </ul>
+        </div>
+      </div>
+      <div className="mt-8 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
+        <p>&copy; {new Date().getFullYear()} Hillpointe. All rights reserved.</p>
+      </div>
+    </motion.footer>
+  );
+};
+
+export default Footer;

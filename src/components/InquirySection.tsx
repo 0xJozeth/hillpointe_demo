@@ -1,11 +1,36 @@
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import LearnMoreButton from './LearnMoreButton'; 
 
 const InquirySection = () => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+
+  const textContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
     <section
+      ref={ref}
       className="relative py-16 md:py-24"
       style={{ backgroundColor: 'rgba(245, 222, 179, 0.1)' }}
     >
@@ -22,20 +47,26 @@ const InquirySection = () => {
       {/* Main content area */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
-          <div className="flex flex-col justify-center pt-0 md:pt-8"> 
-            <p className="text-sm text-gray-600 mb-2">
+          <motion.div
+            className="flex flex-col justify-center pt-0 md:pt-8"
+            variants={textContainerVariants}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+          >
+            <motion.p variants={itemVariants} className="text-sm text-gray-600 mb-2">
               Effortless Capital, Limitless Opportunities.
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
+              variants={itemVariants}
               className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight"
-              style={{ fontFamily: "'Gestiva', serif", fontWeight: 'normal' }}
+              style={{ fontFamily: "'Gestiva', serif", fontWeight: 'bold' }}
             >
               Whether you&apos;re a seasoned investor or new to real estate, Foundation® delivers seamless capital, AI-generated insights and expert guidance – empowering you to invest with confidence.
-            </h2>
-            <p className="text-lg text-gray-700">
+            </motion.h2>
+            <motion.p variants={itemVariants} className="text-lg text-gray-700">
               At Foundation, we&apos;re focused on fusing expert knowledge and insight with cutting-edge technology, elevating investment property financing to the next level.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
           <div className="flex flex-col justify-center w-full"> 
             <div className="bg-white shadow-xl rounded-lg p-6 md:p-8 w-full">

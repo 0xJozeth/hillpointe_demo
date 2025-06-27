@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import Image from 'next/image';
+import { motion, useInView } from 'framer-motion';
 import LearnMoreButton from './LearnMoreButton';
 
 interface GradientOverlaySectionProps {
@@ -10,9 +12,44 @@ const GradientOverlaySection: React.FC<GradientOverlaySectionProps> = ({
   className = '',
   backgroundImageUrl = '/building-1.webp',
 }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
+  const textContainerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: 1.0, // Start after images are mostly done
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
   return (
     <section
-      className={`relative w-full min-h-[50vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden ${className} py-16 md:py-24`} 
+      ref={ref}
+      className={`relative w-full min-h-[50vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden ${className} py-16 md:py-24`}
     >
       {/* Background Image with Opacity */}
       <div
@@ -32,14 +69,25 @@ const GradientOverlaySection: React.FC<GradientOverlaySectionProps> = ({
       />
 
       {/* Content Area */}
-      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 w-full"> 
+      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
           <div className="flex flex-col justify-center">
-            <div className="relative flex justify-center items-start space-x-12 px-4 py-8"> 
-              <div className="bg-gray-300 w-[420px] h-96 rounded-md shadow-lg"></div>
-              <div className="bg-gray-300 w-[420px] h-96 rounded-md shadow-lg relative top-16"></div>
-              <div className="bg-gray-300 w-[420px] h-96 rounded-md shadow-lg relative top-32"></div>
-            </div>
+            <motion.div
+              className="relative flex justify-center items-start space-x-12 px-4 py-8"
+              variants={containerVariants}
+              initial="hidden"
+              animate={inView ? 'visible' : 'hidden'}
+            >
+              <motion.div variants={itemVariants} className="w-[420px] h-96 rounded-md shadow-lg overflow-hidden">
+                <Image src="/building-2.webp" alt="Building 2" width={420} height={384} className="object-cover w-full h-full" />
+              </motion.div>
+              <motion.div variants={itemVariants} className="w-[420px] h-96 rounded-md shadow-lg relative top-16 overflow-hidden">
+                <Image src="/building-3.webp" alt="Building 3" width={420} height={384} className="object-cover w-full h-full" />
+              </motion.div>
+              <motion.div variants={itemVariants} className="w-[420px] h-96 rounded-md shadow-lg relative top-32 overflow-hidden">
+                <Image src="/building-4.webp" alt="Building 4" width={420} height={384} className="object-cover w-full h-full" />
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* Vertical Separator */}
@@ -47,21 +95,29 @@ const GradientOverlaySection: React.FC<GradientOverlaySectionProps> = ({
 
 
           {/* Right Column - Text Content */}
-          <div className="relative flex flex-col justify-center pt-0 md:pt-8 text-left"> 
-            <p className="text-sm text-gray-600 mb-2">
+          <motion.div
+            className="relative flex flex-col justify-center pt-0 md:pt-8 text-left"
+            variants={textContainerVariants}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+          >
+            <motion.p variants={itemVariants} className="text-sm text-gray-600 mb-2">
               Next-Gen Financing
-            </p>
-            <h2
+            </motion.p>
+            <motion.h2
+              variants={itemVariants}
               className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight"
-              style={{ fontFamily: "'Gestiva', serif", fontWeight: 'normal' }}
+              style={{ fontFamily: "'Gestiva', serif", fontWeight: 'bold' }}
             >
               At Foundation, our innovative technology powers every decision. Our intelligent, unbiased approach analyzes your investment goals in real time—delivering customized financing solutions that are faster, smarter, and seamlessly tailored to your needs.
-            </h2>
-            <p className="text-lg text-gray-700 mb-8"> 
+            </motion.h2>
+            <motion.p variants={itemVariants} className="text-lg text-gray-700 mb-8">
               Investment Property Financing, Reinvented.
-            </p>
-            <LearnMoreButton className="mt-6 self-start" /> 
-          </div>
+            </motion.p>
+            <motion.div variants={itemVariants}>
+              <LearnMoreButton className="mt-6 self-start" />
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

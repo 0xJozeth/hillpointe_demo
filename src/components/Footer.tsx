@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
+import Image from 'next/image';
 
 const Footer = () => {
   const { ref, inView } = useInView({
@@ -25,7 +26,9 @@ const Footer = () => {
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="col-span-1">
-          <h2 className="text-2xl font-bold">Hillpointe</h2>
+        <Link href="/" className="text-white text-2xl font-bold">
+              <Image src='/foundation-w.svg' alt='logo' height={60} width={200}/>
+            </Link>
         </div>
         <div className="col-span-1">
           <h3 className="font-semibold">Navigation</h3>
@@ -51,7 +54,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="mt-8 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
-        <p>&copy; {new Date().getFullYear()} Hillpointe. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Foundation. All rights reserved.</p>
       </div>
     </motion.footer>
   );

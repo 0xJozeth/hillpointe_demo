@@ -44,7 +44,7 @@ const Header = () => {
         <div className="container mx-auto px-0 sm:px-4 flex items-center justify-between h-full"> 
           <div className={`transition-opacity duration-300 opacity-100 pt-6`}>
             <Link href="/" className="text-white text-2xl font-bold">
-              <Image src='/hillpoint-white-branding.png' alt='logo' height={60} width={200}/>
+              <Image src='/foundation-w.svg' alt='logo' height={60} width={200}/>
             </Link>
           </div>
           <button

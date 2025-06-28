@@ -97,6 +97,7 @@ body {
 }
 
 :root {
+  --font-gestiva: 'Gestiva';
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.147 0.004 49.25);
@@ -273,3 +274,101 @@ body {
   filter: brightness(0) invert(1);
 }
 
+
+.financing-item-container .hover-heading {
+  font-family: 'Gestiva';
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.financing-item-container:hover .hover-heading {
+  transform: translateX(10px);
+}
+
+.financing-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.animated-text-word {
+  display: inline-block;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.next-gen-title {
+  font-family: 'Gestiva', serif;
+  font-weight: normal;
+  font-size: 4rem;
+}
+
+.financing-item-id {
+  position: relative;
+  font-size: 6rem;
+  line-height: 1;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: clip;
+  margin-left: 2rem;
+}
+
+.financing-item-id .gradient-text {
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.1) 25%, rgba(0, 0, 0, 0) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.financing-item-id .solid-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  color: #a0a0a0;
+  overflow: hidden;
+  transition: height 0.3s ease-in-out;
+}
+
+.financing-item-container:hover .financing-item-id .solid-text {
+  height: 100%;
+}
+
+
+.horizontal-line {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(128, 128, 128, 0.3);
+}
+
+.financing-item-container {
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes image-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.image-fade-in {
+  animation: image-fade-in 0.5s ease-in-out;
+}

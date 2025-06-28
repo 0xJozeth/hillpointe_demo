@@ -5,17 +5,20 @@ interface LearnMoreButtonProps {
   className?: string;
   buttonText?: string;
   htmlType?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
 
 const LearnMoreButton: React.FC<LearnMoreButtonProps> = ({
   className = '',
   buttonText = 'LEARN MORE',
   htmlType = 'button',
+  disabled = false,
 }) => {
 
   return (
     <button
       type={htmlType}
+      disabled={disabled}
       className={`
         relative group overflow-hidden
         bg-black text-white 

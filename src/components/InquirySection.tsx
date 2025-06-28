@@ -2,11 +2,41 @@
 
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import LearnMoreButton from './LearnMoreButton'; 
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
+import LearnMoreButton from './LearnMoreButton';
+import { trpc } from '@/lib/trpc/client';
+import { inquirySchema, type InquiryFormValues } from '@/lib/schemas';
 
 const InquirySection = () => {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const inView = useInView(ref, { once: true, margin: '-100px' });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<InquiryFormValues>({
+    resolver: zodResolver(inquirySchema),
+  });
+
+  const { mutate, isSuccess } = trpc.submitInquiry.useMutation({
+    onSuccess: () => {
+      toast.success('Inquiry submitted successfully!');
+      reset();
+    },
+    onError: (error) => {
+      toast.error('Failed to submit inquiry', {
+        description: error.message,
+      });
+    },
+  });
+
+  const onSubmit = (data: InquiryFormValues) => {
+    mutate(data);
+  };
 
   const textContainerVariants = {
     hidden: {},
@@ -68,62 +98,78 @@ const InquirySection = () => {
             </motion.p>
           </motion.div>
 
-          <div className="flex flex-col justify-center w-full"> 
+          <div className="flex flex-col justify-center w-full">
             <div className="bg-white shadow-xl rounded-lg p-6 md:p-8 w-full">
-              <form className="space-y-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">Make an Inquiry</h3>
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="Your Name"
-                  />
+              {isSuccess ? (
+                <div className="text-center">
+                  <h3 className="text-2xl font-semibold text-green-600 mb-4">Thank You!</h3>
+                  <p className="text-gray-700">Your inquiry has been submitted successfully. We will get back to you shortly.</p>
                 </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="(123) 456-7890"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="inquiry" className="block text-sm font-medium text-gray-700 mb-1">
-                    Inquiry
-                  </label>
-                  <textarea
-                    name="inquiry"
-                    id="inquiry"
-                    rows={4}
-                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                    placeholder="How can we help you?"
-                  ></textarea>
-                </div>
-                <div className="pt-2">
-                  <LearnMoreButton buttonText="Submit" htmlType="submit" className="w-full" />
-                </div>
-              </form>
+              ) : (
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-6 text-center">Make an Inquiry</h3>
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      {...register('name')}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="Your Name"
+                    />
+                    {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      {...register('email')}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="your.email@example.com"
+                    />
+                    {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone <span className="text-gray-500">(Optional)</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      {...register('phone')}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="(123) 456-7890"
+                    />
+                    {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>}
+                  </div>
+                  <div>
+                    <label htmlFor="inquiry" className="block text-sm font-medium text-gray-700 mb-1">
+                      Inquiry
+                    </label>
+                    <textarea
+                      id="inquiry"
+                      rows={4}
+                      {...register('inquiry')}
+                      className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                      placeholder="How can we help you?"
+                    ></textarea>
+                    {errors.inquiry && <p className="mt-1 text-sm text-red-600">{errors.inquiry.message}</p>}
+                  </div>
+                  <div className="pt-2">
+                    <LearnMoreButton
+                      buttonText={isSubmitting ? 'Submitting...' : 'Submit'}
+                      htmlType="submit"
+                      className="w-full"
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>

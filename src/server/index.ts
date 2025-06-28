@@ -1,5 +1,6 @@
 import { publicProcedure, router } from './trpc';
 import { z } from 'zod';
+import { inquirySchema } from '@/lib/schemas';
 
 export const appRouter = router({
   getLoanProducts: publicProcedure.query(async () => {
@@ -18,9 +19,15 @@ export const appRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      // In a real app, you'd save this to a database
       console.log('Application received:', input);
       return { success: true, message: 'Application submitted!' };
+    }),
+  submitInquiry: publicProcedure
+    .input(inquirySchema)
+    .mutation(async ({ input }) => {
+      console.log('Inquiry received:', input);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return { success: true, message: 'Inquiry submitted successfully!' };
     }),
 });
 

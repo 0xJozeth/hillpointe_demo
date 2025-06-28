@@ -60,6 +60,8 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
       if (modalContainerWidth > 0) {
         const calculatedHeight = modalContainerWidth * (9 / 16); // standard 16:9 aspect ratio
         setInitialModalHeightPx(calculatedHeight);
+        // Set the initial height on the container. This is important for the scale transform to work correctly.
+        modalVideoContainerRef.current.style.height = `${calculatedHeight}px`;
       }
     }
     // empty dependency array: effect runs once after initial render
@@ -96,19 +98,27 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     // --- style updates for modal video container ---
     // main element that scales and changes appearance
     const modalC = modalVideoContainerRef.current;
-    const initialModalWidthPercent = 75; // modal starts at 75% of parent's width
-    const targetModalWidthPercent = 100; // modal ends at 100% of parent's width (full screen)
-    // interpolate width: smooth transition from initial to target width based on progress 'prog'
-    modalC.style.width = `${initialModalWidthPercent + prog * (targetModalWidthPercent - initialModalWidthPercent)}%`;
+    const heroSection = heroSectionRef.current;
 
-    const targetHeightPx = heroSectionRef.current.offsetHeight; // modal's target height is full hero section height
-    // interpolate height: smooth transition from calculated initial height to full section height
-    modalC.style.height = `${initialModalHeightPx * (1 - prog) + targetHeightPx * prog}px`;
+    // To improve performance, we use `transform: scale()` instead of animating width and height.
+    // This offloads the animation to the GPU and avoids expensive layout recalculations.
+    const targetHeightPx = heroSection.offsetHeight;
+    
+    // The modal starts at 75% width, so the final scale factor for X is 1/0.75.
+    const scaleX = 1 / 0.75;
+    const scaleY = initialModalHeightPx > 0 ? targetHeightPx / initialModalHeightPx : 1;
+
+    // Interpolate scale from 1 to the target scale
+    const currentScaleX = 1 + (scaleX - 1) * prog;
+    const currentScaleY = 1 + (scaleY - 1) * prog;
+
+    // We use scale for a smoother animation. We assume the element is centered.
+    modalC.style.transform = `scale(${currentScaleX}, ${currentScaleY})`;
     
     // interpolate border radius: corners sharpen (radius decreases) as modal expands
     modalC.style.borderRadius = `${10 * (1 - prog)}px`;
-    // interpolate box shadow: shadow fades (less intense, smaller) as modal expands
-    modalC.style.boxShadow = `0 ${4 * (1 - prog)}px ${12 * (1 - prog)}px rgba(0, 0, 0, ${0.3 * (1 - prog)})`;
+    // box-shadow animation is expensive, so we remove it for performance.
+    modalC.style.boxShadow = 'none';
 
     // --- style updates for video player inside modal ---
     // actual <video> element

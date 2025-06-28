@@ -237,14 +237,19 @@ body {
 }
 
 .hero-modal-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   /* border: 2px solid white;  */
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   background-color: black;
   width: 75%;
-  position: relative;
   z-index: 2;
+  transform-origin: center;
 }
 
 .hero-modal-video {

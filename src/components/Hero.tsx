@@ -38,7 +38,7 @@ const Hero = ({ setHeroAnimationProgress }: { setHeroAnimationProgress: (progres
 
   return (
     <div className="hero-section" ref={heroSectionRef}>
-      <video autoPlay loop muted className="hero-video" ref={bgVideoRef}>
+      <video autoPlay loop muted className="hero-video" ref={bgVideoRef} poster='/poster_hero_1.webp'>
         <source src="/video_2_comp.webm" type="video/webm" />
         your browser does not support the video tag.
       </video>
@@ -46,7 +46,7 @@ const Hero = ({ setHeroAnimationProgress }: { setHeroAnimationProgress: (progres
       <div className="hero-content">
         <h1 className="hero-title hero-title-bottom" ref={heroTitleBottomRef}>BUILD <br/> LASTING <br/> VALUE</h1>
         <div className="hero-modal-video-container" ref={modalVideoContainerRef}>
-          <video autoPlay loop muted className="hero-modal-video" ref={modalVideoPlayerRef}>
+          <video autoPlay loop muted className="hero-modal-video" ref={modalVideoPlayerRef} poster='/poster_hero_1.webp'>
             <source src="/video_2_comp.webm" type="video/webm" />
             your browser does not support the video tag.
           </video>

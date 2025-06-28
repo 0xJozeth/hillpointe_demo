@@ -37,8 +37,8 @@ const ValueProposition = () => {
             &
           </h2>
             <Image
-              src="/hillpoint-white-branding.png"
-              alt="Hillpointe Logo"
+              src="/foundation-w.svg"
+              alt="Foundation Logo"
               width={150}
               height={100}
               style={{ filter: 'brightness(0)' }}

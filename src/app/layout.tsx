@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Geist, Geist_Mono } from "next/font/google";
+import localFont from 'next/font/local';
 import "./globals.css";
 import Header from "@/components/Header";
 import Provider from "@/lib/trpc/Provider";
@@ -17,6 +18,22 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const gestiva = localFont({
+  src: [
+    {
+      path: '../../public/fonts/gestiva/Gestiva.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/gestiva/Gestiva Italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-gestiva',
 });
 
 export default function RootLayout({
@@ -37,7 +54,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${gestiva.variable} antialiased`}
       >
         <Provider>
           <AnimatePresence>

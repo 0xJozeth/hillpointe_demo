@@ -6,6 +6,7 @@ import BottomNav from '@/components/BottomNav';
 import ValueProposition from '@/components/ValueProposition';
 import NextGenFinancing from '@/components/NextGenFinancing';
 import InquirySection from '@/components/InquirySection';
+import FaqSection from '@/components/FaqSection';
 import GradientOverlaySection from '@/components/GradientOverlaySection';
 import Footer from '@/components/Footer';
 
@@ -20,6 +21,7 @@ export default function Home() {
       <ValueProposition />
       <NextGenFinancing />
       <InquirySection />
+      <FaqSection />
       <GradientOverlaySection />
       <BottomNav isHeroAnimationComplete={isHeroAnimationComplete} />
       <Footer />

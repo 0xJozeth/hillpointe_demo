@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
@@ -75,7 +76,7 @@ const InquirySection = () => {
       />
 
       {/* Main content area */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
           <motion.div
             className="flex flex-col justify-center pt-0 md:pt-8"
@@ -83,6 +84,18 @@ const InquirySection = () => {
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
           >
+            <motion.div
+              className="mb-8"
+              variants={itemVariants}
+            >
+              <Image
+                src="/professional-1.jpg"
+                alt="Professional discussing real estate"
+                width={500}
+                height={750}
+                className="rounded-lg shadow-xl object-cover w-full h-auto max-h-[750px]"
+              />
+            </motion.div>
             <motion.p variants={itemVariants} className="text-sm text-gray-600 mb-2">
               Effortless Capital, Limitless Opportunities.
             </motion.p>
@@ -91,14 +104,14 @@ const InquirySection = () => {
               className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight"
               style={{ fontFamily: "'Gestiva', serif", fontWeight: 'bold' }}
             >
-              Whether you&apos;re a seasoned investor or new to real estate, Foundation® delivers seamless capital, AI-generated insights and expert guidance – empowering you to invest with confidence.
+              Whether you&apos;re a seasoned investor or new to real estate, Foundation&reg; delivers seamless capital, AI-generated insights and expert guidance – empowering you to invest with confidence.
             </motion.h2>
             <motion.p variants={itemVariants} className="text-lg text-gray-700">
               At Foundation, we&apos;re focused on fusing expert knowledge and insight with cutting-edge technology, elevating investment property financing to the next level.
             </motion.p>
           </motion.div>
 
-          <div className="flex flex-col justify-center w-full">
+          <div className="flex flex-col justify-center w-full my-auto">
             <div className="bg-white shadow-xl rounded-lg p-6 md:p-8 w-full">
               {isSuccess ? (
                 <div className="text-center">

@@ -44,7 +44,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ isHeroAnimationComplete }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40"
+      className="fixed bottom-4 left-[calc(50%-40px)] -translate-x-1/2 z-40"
     >
       <div className="bg-black text-white px-8 py-4 rounded-full shadow-2xl relative opacity-95">
         <div

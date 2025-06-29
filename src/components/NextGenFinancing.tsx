@@ -53,7 +53,7 @@ const NextGenFinancing = () => {
   const activeItem = financingData.find(item => item.id === activeCard);
 
   return (
-    <section style={{ backgroundColor: '#fdfcf7' }} className="w-full font-gestiva overflow-hidden pb-12 px-24">
+    <section style={{ backgroundColor: '#fdfcf7' }} className="w-full font-gestiva overflow-hidden p-24 ">
       <div className="w-full">
         <h2 className="text-4xl font-bold text-center my-12 text-gray-800 next-gen-title">Next Gen Financing</h2>
         <div className="w-full">
@@ -72,8 +72,10 @@ const NextGenFinancing = () => {
               >
                 <div className="flex items-center justify-between p-4 cursor-pointer">
                   <h3
-                    className={`text-2xl font-semibold text-gray-700 hover-heading flex-grow ${
-                      activeCard === item.id ? 'opacity-100' : 'opacity-30'
+                    className={`text-3xl font-semibold hover-heading flex-grow ${
+                      activeCard === item.id
+                        ? 'text-black opacity-100'
+                        : 'text-gray-700 opacity-80'
                     }`}
                   >
                     {item.title}
@@ -97,8 +99,8 @@ const NextGenFinancing = () => {
             top: position.y,
             left: position.x,
             transform: 'translate(20px, -50%)',
-            width: '350px',
-            height: '450px',
+            width: '450px',
+            height: '550px',
             zIndex: 50,
             pointerEvents: 'none',
             opacity: isCardVisible ? 1 : 0,

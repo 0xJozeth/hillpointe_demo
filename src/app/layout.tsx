@@ -9,6 +9,7 @@ import Provider from "@/lib/trpc/Provider";
 import { LenisProvider } from '@/hooks/useLenis';
 import { Toaster } from "sonner";
 import LoadingScreen from '@/components/LoadingScreen';
+import ScrollToTopButton from '@/components/ScrollToTopButton';
 import { AnimatePresence } from 'framer-motion';
 
 const geistSans = Geist({
@@ -69,6 +70,7 @@ export default function RootLayout({
                 <Header />
                 {children}
                 <Toaster />
+                <ScrollToTopButton />
               </>
             )}
           </LenisProvider>

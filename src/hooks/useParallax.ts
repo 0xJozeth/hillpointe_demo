@@ -1,25 +1,25 @@
 import { useState, useEffect } from 'react';
+import { useLenis } from '@/hooks/useLenis';
 
 const useParallax = (speedFactor: number): string => {
   const [transform, setTransform] = useState('translateY(0px)');
+  const lenis = useLenis();
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
+    if (!lenis) return;
 
-    const handleScroll = () => {
-      const offsetY = window.scrollY;
-      setTransform(`translateY(${offsetY * speedFactor}px)`);
+    const handleScroll = ({ scroll }: { scroll: number }) => {
+      setTransform(`translateY(${scroll * speedFactor}px)`);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); 
+    lenis.on('scroll', handleScroll);
+    // Initial position
+    handleScroll({ scroll: lenis.scroll });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      lenis.off('scroll', handleScroll);
     };
-  }, [speedFactor]);
+  }, [lenis, speedFactor]);
 
   return transform;
 };

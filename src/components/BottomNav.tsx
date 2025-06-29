@@ -46,9 +46,9 @@ const BottomNav: React.FC<BottomNavProps> = ({ isHeroAnimationComplete }) => {
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40"
     >
-      <div className="bg-black text-white px-8 py-4 rounded-full shadow-2xl relative">
+      <div className="bg-black text-white px-8 py-4 rounded-full shadow-2xl relative opacity-95">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-90 rounded-full"
+          className="absolute inset-0 bg-cover bg-center opacity-40 rounded-full"
           style={{ backgroundImage: "url('/texture-1.jpg')" }}
         />
         <ul className="flex items-center space-x-6 relative z-10 divide-x divide-white/30">

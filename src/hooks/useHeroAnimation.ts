@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, RefObject, useCallback } from 'react';
+import { useLenis } from '@/hooks/useLenis';
 
 // types for refs passed to hook
 // initialized with `null` by `useref`, so `current` property can be null
@@ -14,7 +15,7 @@ interface HeroAnimationRefs {
 
 // total "distance" user needs to "scroll" with mouse wheel for full animation
 // larger number = more scrolling = less sensitive to small wheel movements
-const TOTAL_WHEEL_INTERACTION_RANGE = 1000;
+const SCROLL_RANGE = 125; // The scroll distance over which the animation occurs
 
 /**
  * custom react hook for hero section's scroll-to-zoom video animation
@@ -36,12 +37,11 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     heroTitleTopRef,
   } = refs;
 
+  const lenis = useLenis();
+
   // stores calculated initial height of modal video container (pixels)
   // important for smooth height animation
   const [initialModalHeightPx, setInitialModalHeightPx] = useState(0);
-
-  // accumulates deltaY from wheel events, drives animation progress
-  const [accumulatedWheelDelta, setAccumulatedWheelDelta] = useState(0);
 
   // Animation progress state (0 to 1)
   const [animationProgress, setAnimationProgress] = useState(0);
@@ -143,76 +143,35 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
   }, [heroSectionRef, modalVideoContainerRef, bgVideoRef, overlayRef, modalVideoPlayerRef, initialModalHeightPx, heroTitleBottomRef, heroTitleTopRef, setAnimationProgress]);
 
 
-  // effect sets up and tears down 'wheel' event listener for animation
-  // runs when initialmodalheightpx set or accumulatedwheeldelta changes
   useEffect(() => {
-    const hSection = heroSectionRef.current;
-    // don't attach listener if hero section not rendered or initial height not ready
-    if (!hSection || initialModalHeightPx === 0) return;
+    if (!lenis || initialModalHeightPx === 0) return;
 
-    /**
-     * handles mouse wheel event on hero section
-     * updates accumulated wheel delta, triggers visual update
-     * prevents default page scrolling if animation active
-     * @param event the wheelevent from browser
-     */
-    const handleWheel = (event: WheelEvent) => {
-      // update total accumulated scroll delta
-      let newDelta = accumulatedWheelDelta + event.deltaY;
-      // clamp delta within defined interaction range (0 to total_wheel_interaction_range)
-      newDelta = Math.min(TOTAL_WHEEL_INTERACTION_RANGE, Math.max(0, newDelta));
-      
-      setAccumulatedWheelDelta(newDelta);
+    const handleScroll = ({ scroll }: { scroll: number }) => {
+      const scrollY = scroll;
+      let progress = scrollY / SCROLL_RANGE;
+      progress = Math.min(1, Math.max(0, progress));
 
-      const currentProgress = newDelta / TOTAL_WHEEL_INTERACTION_RANGE;
-
-      // prevent browser's default page scroll if animation in progress
-      // allows wheel event to exclusively control animation
-      if (event.deltaY > 0 && currentProgress < 1) { // scrolling down, animation not at end
-        event.preventDefault();
-      } else if (event.deltaY < 0 && currentProgress > 0) { // scrolling up, animation not at start
-        event.preventDefault();
-      }
-      
-      // use requestanimationframe to schedule visual update
-      // helps achieve smoother animations by syncing with browser's repaint cycle
-      // cancel any previously requested frame to avoid redundant work
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }
+
       animationFrameId.current = requestAnimationFrame(() => {
-        updateVisuals(currentProgress);
+        updateVisuals(progress);
       });
     };
 
-    // attach wheel event listener to hero section
-    // 'passive: false' crucial to allow 'event.preventdefault()'
-    hSection.addEventListener('wheel', handleWheel, { passive: false });
+    lenis.on('scroll', handleScroll);
 
-    // perform initial update to set visuals based on current (likely zero) accumulated delta
-    updateVisuals(accumulatedWheelDelta / TOTAL_WHEEL_INTERACTION_RANGE);
+    // initial update
+    updateVisuals(lenis.scroll / SCROLL_RANGE);
 
-    // cleanup function: runs when component unmounts or before effect re-runs
-    // important to remove event listener to prevent memory leaks
     return () => {
-      hSection.removeEventListener('wheel', handleWheel);
+      lenis.off('scroll', handleScroll);
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-    // dependencies for effect: re-runs if these values change
-  }, [heroSectionRef, initialModalHeightPx, accumulatedWheelDelta, updateVisuals]); // added updatevisuals to dependency array as used inside
-
-
-  // effect ensures if initialmodalheightpx or accumulatedwheeldelta changes
-  // (e.g. after initial calculation or if delta set programmatically elsewhere - not current case),
-  // visuals updated accordingly
-  useEffect(() => {
-    if (initialModalHeightPx > 0) {
-        updateVisuals(accumulatedWheelDelta / TOTAL_WHEEL_INTERACTION_RANGE);
-    }
-  // dependencies for effect
-  }, [initialModalHeightPx, accumulatedWheelDelta, updateVisuals]); // added updatevisuals
+  }, [lenis, initialModalHeightPx, updateVisuals]);
 
   return { animationProgress };
 };

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Hero from '@/components/Hero';
+import IntroductionSection from '@/components/IntroductionSection';
 import BottomNav from '@/components/BottomNav';
 import ValueProposition from '@/components/ValueProposition';
 import NextGenFinancing from '@/components/NextGenFinancing';
@@ -18,11 +19,12 @@ export default function Home() {
   return (
     <div>
       <Hero setHeroAnimationProgress={setHeroAnimationProgress} />
+      <GradientOverlaySection />
       <ValueProposition />
+      <IntroductionSection />
       <NextGenFinancing />
       <InquirySection />
       <FaqSection />
-      <GradientOverlaySection />
       <BottomNav isHeroAnimationComplete={isHeroAnimationComplete} />
       <Footer />
     </div>

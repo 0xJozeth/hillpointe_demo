@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from 'next/font/local';
+import Lenis from 'lenis';
 import "./globals.css";
 import Header from "@/components/Header";
 import Provider from "@/lib/trpc/Provider";
@@ -44,11 +45,26 @@ export default function RootLayout({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      lenis.destroy();
+    };
   }, []);
 
   return (

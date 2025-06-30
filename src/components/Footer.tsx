@@ -1,27 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import Image from 'next/image';
 
 const Footer = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-
-  const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-  };
 
   return (
-    <motion.footer
-      ref={ref}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={fadeIn}
+    <footer 
       className="bg-black text-white py-12 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -56,7 +41,7 @@ const Footer = () => {
       <div className="mt-8 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
         <p>&copy; {new Date().getFullYear()} Foundation. All rights reserved.</p>
       </div>
-    </motion.footer>
+    </footer>
   );
 };
 

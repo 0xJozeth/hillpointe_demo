@@ -10,6 +10,8 @@ import InquirySection from '@/components/InquirySection';
 import FaqSection from '@/components/FaqSection';
 import GradientOverlaySection from '@/components/GradientOverlaySection';
 import Footer from '@/components/Footer';
+import LoanProducts from '@/components/LoanProducts';
+import { loanProducts } from '@/lib/schemas';
 
 export default function Home() {
   const [heroAnimationProgress, setHeroAnimationProgress] = useState(0);
@@ -18,15 +20,16 @@ export default function Home() {
 
   return (
     <div>
-      <Hero setHeroAnimationProgress={setHeroAnimationProgress} />
-      <GradientOverlaySection />
-      <ValueProposition />
-      <IntroductionSection />
-      <NextGenFinancing />
-      <InquirySection />
-      <FaqSection />
-      <BottomNav isHeroAnimationComplete={isHeroAnimationComplete} />
+        <Hero setHeroAnimationProgress={setHeroAnimationProgress} />
+        <GradientOverlaySection />
+        <ValueProposition />
+        <IntroductionSection />
+        <NextGenFinancing />
+        <LoanProducts products={loanProducts} />
+        <InquirySection />
+        <FaqSection />
+        <BottomNav isHeroAnimationComplete={isHeroAnimationComplete} />
       <Footer />
-    </div>
+</div>
   );
 }

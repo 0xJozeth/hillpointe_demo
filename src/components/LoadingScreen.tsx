@@ -33,7 +33,8 @@ const LoadingScreen = () => {
         muted
         className="absolute top-0 left-0 w-full h-full object-cover video-filter video-zoom"
       >
-        <source src="/foundation-loader.webm" type="video/webm" />
+        <source src="/Foundation-Loader.webm" type="video/webm" />
+        <source src="/foundation-loader.mp4" type="video/mp4" />
       </video>
       <div className="relative z-10 flex flex-col items-center">
         <Image

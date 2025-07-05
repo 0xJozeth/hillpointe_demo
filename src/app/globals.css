@@ -186,6 +186,12 @@ body {
   white-space: nowrap;
 }
 
+@media screen and (max-width: 768px) {
+  .hero-title {
+  font-size: 5rem;
+}
+}
+
 .hero-title-bottom {
   z-index: 1;
 }
@@ -249,6 +255,23 @@ body {
   transform-origin: center;
 }
 
+/* @media screen and (max-width: 768px) {
+  .hero-modal-video-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: black;
+  width: 100%;
+  z-index: 2;
+  transform-origin: center;
+}
+} */
+
 .hero-modal-video {
   display: block; /* removes extra space below video */
   width: 100%;
@@ -256,6 +279,7 @@ body {
   object-fit: cover; 
   border-radius: 6px; /* slightly less than container to avoid border overlap issues */
 }
+
 
 @layer base {
   * {

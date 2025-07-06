@@ -48,6 +48,7 @@ const GradientOverlaySection: React.FC<GradientOverlaySectionProps> = ({
 
   return (
     <section
+    id='gradientOverlay'
       ref={ref}
       className={`relative w-full min-h-[50vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden ${className} py-16 md:py-24`}
     >

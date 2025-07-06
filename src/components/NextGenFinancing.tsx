@@ -55,7 +55,7 @@ const NextGenFinancing = () => {
   return (
     <section style={{ backgroundColor: '#fdfcf7' }} className="w-full font-gestiva overflow-hidden md:p-24 ">
       <div className="w-full">
-        <h2 className="text-[3rem] md:text-[4rem] font-bold text-center my-12 text-gray-800 next-gen-title">Next Gen Financing</h2>
+        <h2 className="text-[3rem] md:text-[4rem] font-bold text-center my-12 text-gray-800 next-gen-title" style={{ fontWeight: 'bold'}}>Next Gen Financing</h2>
         <div className="w-full">
           {financingData.map((item, index) => (
             <div key={item.id}>

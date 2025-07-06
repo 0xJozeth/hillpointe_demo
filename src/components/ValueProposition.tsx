@@ -15,7 +15,7 @@ const ValueProposition = () => {
         <div className="flex w-full items-center justify-center text-center md:w-1/2 md:pr-8 md:text-left">
           <h2
             className="text-4xl leading-tight md:text-6xl"
-            style={{ fontFamily: "'Gestiva', serif" }}
+            style={{ fontFamily: "'Gestiva', serif", fontWeight: 'bold' }}
           >
             Unlocking Smart Capital For Data-Driven Investors
           </h2>

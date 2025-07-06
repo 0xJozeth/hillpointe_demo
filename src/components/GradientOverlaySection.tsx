@@ -73,18 +73,18 @@ const GradientOverlaySection: React.FC<GradientOverlaySectionProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
           <div className="flex flex-col justify-center">
             <motion.div
-              className="relative flex justify-center items-start space-x-12 px-4 py-8"
+              className="relative flex flex-row items-start justify-center px-4 py-8 space-x-4 md:space-x-12"
               variants={containerVariants}
               initial="hidden"
               animate={inView ? 'visible' : 'hidden'}
             >
-              <motion.div variants={itemVariants} className="w-[420px] h-96 rounded-md shadow-lg overflow-hidden">
+              <motion.div variants={itemVariants} className="w-1/2 md:w-[420px] h-96 rounded-md shadow-lg overflow-hidden">
                 <Image src="/building-2.webp" alt="Building 2" width={420} height={384} className="object-cover w-full h-full" />
               </motion.div>
-              <motion.div variants={itemVariants} className="w-[420px] h-96 rounded-md shadow-lg relative top-16 overflow-hidden">
+              <motion.div variants={itemVariants} className="w-1/2 md:w-[420px] h-96 rounded-md shadow-lg overflow-hidden md:translate-y-16">
                 <Image src="/building-3.webp" alt="Building 3" width={420} height={384} className="object-cover w-full h-full" />
               </motion.div>
-              <motion.div variants={itemVariants} className="w-[420px] h-96 rounded-md shadow-lg relative top-32 overflow-hidden">
+              <motion.div variants={itemVariants} className="w-[420px] h-96 rounded-md shadow-lg overflow-hidden hidden md:block md:translate-y-32">
                 <Image src="/building-4.webp" alt="Building 4" width={420} height={384} className="object-cover w-full h-full" />
               </motion.div>
             </motion.div>
@@ -96,7 +96,7 @@ const GradientOverlaySection: React.FC<GradientOverlaySectionProps> = ({
 
           {/* Right Column - Text Content */}
           <motion.div
-            className="relative flex flex-col justify-center pt-16 md:pt-8 text-left"
+            className="relative flex flex-col justify-center pt-2 md:pt-8 text-left"
             variants={textContainerVariants}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}

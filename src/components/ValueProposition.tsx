@@ -4,6 +4,7 @@ import Image from 'next/image';
 const ValueProposition = () => {
   return (
     <section
+      id="value-proposition"
       className="w-full flex items-center text-black py-12 md:py-0"
       style={{
         minHeight: '300px',

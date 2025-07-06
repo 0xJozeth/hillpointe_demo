@@ -96,7 +96,7 @@ const GradientOverlaySection: React.FC<GradientOverlaySectionProps> = ({
 
           {/* Right Column - Text Content */}
           <motion.div
-            className="relative flex flex-col justify-center pt-0 md:pt-8 text-left"
+            className="relative flex flex-col justify-center pt-16 md:pt-8 text-left"
             variants={textContainerVariants}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}

@@ -332,15 +332,13 @@ body {
 .next-gen-title {
   font-family: 'Gestiva', serif;
   font-weight: normal;
-  font-size: 4rem;
 }
 
 .financing-item-id {
   position: relative;
-  font-size: 6rem;
   line-height: 1;
   font-weight: bold;
-  overflow: hidden;
+  /* overflow: hidden; */
   white-space: nowrap;
   text-overflow: clip;
   margin-left: 2rem;

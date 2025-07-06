@@ -77,7 +77,7 @@ const IntroductionSection = () => {
               alt="Foundation Logo"
               width={800}
               height={100}
-              className="filter-white"
+              className="filter-white h-auto w-72 md:w-[800px]"
             />
           </div>
         </div>

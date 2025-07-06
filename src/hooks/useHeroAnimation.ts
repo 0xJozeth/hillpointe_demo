@@ -38,6 +38,7 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
   } = refs;
 
   const lenis = useLenis();
+  const [isMobile, setIsMobile] = useState(false);
 
   // stores calculated initial height of modal video container (pixels)
   // important for smooth height animation
@@ -49,11 +50,21 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
   // id of current animation frame request, for cancelling pending frames (performance)
   const animationFrameId = useRef<number | null>(null);
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
 
   // effect runs once on mount
   // calculates initial height of modal video container
   // height based on container's actual rendered width and 16:9 aspect ratio
   useEffect(() => {
+    if (isMobile) return;
     if (modalVideoContainerRef.current) {
       const modalContainerWidth = modalVideoContainerRef.current.offsetWidth;
       // proceed only if container has measurable width
@@ -65,7 +76,7 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
       }
     }
     // empty dependency array: effect runs once after initial render
-  }, [modalVideoContainerRef]);
+  }, [modalVideoContainerRef, isMobile]);
 
 
   /**
@@ -74,6 +85,7 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
    * @param progressValue number between 0 (animation start) and 1 (animation end)
    */
   const updateVisuals = useCallback((progressValue: number) => {
+    if (isMobile) return;
     // exit if required elements aren't available or initial height not calculated
     // check ensures no attempt to access properties of null refs
     if (
@@ -140,11 +152,11 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
     // Update the shared animation progress state
     setAnimationProgress(prog);
 
-  }, [heroSectionRef, modalVideoContainerRef, bgVideoRef, overlayRef, modalVideoPlayerRef, initialModalHeightPx, heroTitleBottomRef, heroTitleTopRef, setAnimationProgress]);
+  }, [heroSectionRef, modalVideoContainerRef, bgVideoRef, overlayRef, modalVideoPlayerRef, initialModalHeightPx, heroTitleBottomRef, heroTitleTopRef, setAnimationProgress, isMobile]);
 
 
   useEffect(() => {
-    if (!lenis || initialModalHeightPx === 0) return;
+    if (isMobile || !lenis || initialModalHeightPx === 0) return;
 
     const handleScroll = ({ scroll }: { scroll: number }) => {
       const scrollY = scroll;
@@ -171,9 +183,9 @@ const useHeroAnimation = (refs: HeroAnimationRefs) => {
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [lenis, initialModalHeightPx, updateVisuals]);
+  }, [lenis, initialModalHeightPx, updateVisuals, isMobile]);
 
-  return { animationProgress };
+  return { animationProgress, isMobile };
 };
 
 export default useHeroAnimation;

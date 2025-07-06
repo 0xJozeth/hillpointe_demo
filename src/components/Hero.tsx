@@ -21,7 +21,7 @@ const Hero = ({ setHeroAnimationProgress }: { setHeroAnimationProgress: (progres
 
   // custom animation hook here, passing necessary refs
   // hook handles event listeners and style updates
-  const { animationProgress } = useHeroAnimation({
+  const { animationProgress, isMobile } = useHeroAnimation({
     heroSectionRef,
     modalVideoContainerRef,
     bgVideoRef,
@@ -38,19 +38,25 @@ const Hero = ({ setHeroAnimationProgress }: { setHeroAnimationProgress: (progres
 
   return (
     <div className="hero-section" ref={heroSectionRef}>
-      <video autoPlay loop muted className="hero-video" ref={bgVideoRef} poster='/poster_hero_1.webp'>
-        <source src="/video_2_comp.webm" type="video/webm" />
-        your browser does not support the video tag.
-      </video>
+      {isMobile ? (
+        <img src="/poster_hero_1.webp" alt="Hero background" className="hero-poster-image" />
+      ) : (
+        <video autoPlay loop muted className="hero-video" ref={bgVideoRef} poster='/poster_hero_1.webp'>
+          <source src="/video_2_comp.webm" type="video/webm" />
+          your browser does not support the video tag.
+        </video>
+      )}
       <div className="hero-overlay" ref={overlayRef}></div>
       <div className="hero-content">
         <h1 className="hero-title hero-title-bottom" ref={heroTitleBottomRef}>BUILD <br/> LASTING <br/> VALUE</h1>
-        <div className="hero-modal-video-container" ref={modalVideoContainerRef}>
-          <video autoPlay loop muted className="hero-modal-video" ref={modalVideoPlayerRef} poster='/poster_hero_1.webp'>
-            <source src="/video_2_comp.webm" type="video/webm" />
-            your browser does not support the video tag.
-          </video>
-        </div>
+        {!isMobile && (
+          <div className="hero-modal-video-container" ref={modalVideoContainerRef}>
+            <video autoPlay loop muted className="hero-modal-video" ref={modalVideoPlayerRef} poster='/poster_hero_1.webp'>
+              <source src="/video_2_comp.webm" type="video/webm" />
+              your browser does not support the video tag.
+            </video>
+          </div>
+        )}
         <h1 className="hero-title hero-title-top" ref={heroTitleTopRef}>BUILD <br/>LASTING <br/> VALUE</h1>
       </div>
     </div>
